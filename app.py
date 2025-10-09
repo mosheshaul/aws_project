@@ -4,17 +4,8 @@ from flask import Flask, render_template_string
 
 app = Flask(__name__)
 
-# Fetch AWS credentials from environment variables
-AWS_ACCESS_KEY = os.getenv("AWS_ACCESS_KEY_ID")
-AWS_SECRET_KEY = os.getenv("AWS_SECRET_ACCESS_KEY")
-REGION = "us-east-1"
-
 # Initialize Boto3 clients
-session = boto3.Session(
-   aws_access_key_id=AWS_ACCESS_KEY,
-   aws_secret_access_key=AWS_SECRET_KEY,
-   region_name=REGION
-)
+session = boto3.Session(profile_name="aws_project")
 ec2_client = session.client("ec2")
 elb_client = session.client("elbv2")
 
@@ -33,12 +24,15 @@ def home():
            })
   
    # Fetch VPCs
+   vpcs = ec2_client.describe_vpcs()
    vpc_data = [{"VPC ID": vpc["VpcId"], "CIDR": vpc["CidrBlock"]} for vpc in vpcs["Vpcs"]]
   
    # Fetch Load Balancers
+   lbs = elb_client.describe_load_balancers()
    lb_data = [{"LB Name": lb["LoadBalancerName"], "DNS Name": lb["DNSName"]} for lb in lbs["LoadBalancers"]]
   
    # Fetch AMIs (only owned by the account)
+   amis = ec2_client.describe_images(Owners=["self"])
    ami_data = [{"AMI ID": ami["ImageId"], "Name": ami.get("Name", "N/A")} for ami in amis["Images"]]
   
    # Render the result in a simple table
