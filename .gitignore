@@ -1,0 +1,30 @@
+# Python virtualenv
+.venv/
+venv/
+
+# Bytecode and caches
+__pycache__/
+*.pyc
+
+# Local settings and dotenv
+.env
+.env.*
+
+# IDE settings
+.vscode/
+
+# OS junk
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+
+# Keys and certs - never commit secrets
+*.pem
+*.key
+*.cer
+*.crt
+
+# Node leftovers (if you add a front end later)
+node_modules/
