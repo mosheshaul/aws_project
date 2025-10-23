@@ -28,3 +28,32 @@ Thumbs.db
 
 # Node leftovers (if you add a front end later)
 node_modules/
+
+# Terraform
+.terraform/
+.terraform.lock.hcl
+*.tfstate
+*.tfstate.*
+crash.log
+override.tf
+override.tf.json
+*_override.tf
+*_override.tf.json
+.terraf*
+# Keys - keep private keys local only
+*.pem
+builder-key# --- Terraform (do not commit state) ---
+.terraform/
+.terraform.lock.hcl
+*.tfstate
+*.tfstate.*
+crash.log
+override.tf
+override.tf.json
+*_override.tf
+*_override.tf.json
+.terraf*
+
+# --- Local SSH keys (keep private) ---
+Terraform/aws/dev/builder-key
+*.pem
